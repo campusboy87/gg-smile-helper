@@ -1,0 +1,12 @@
+.search-smile {
+    margin-bottom: 15px;
+}
+
+.search-smile-list-active .streamer-name {
+    display: none !important;
+}
+
+.search-smile-list-active > div {
+    display: inline !important;
+    padding-right: 0 !important;
+}
