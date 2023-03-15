@@ -1,16 +1,57 @@
-setTimeout(GoodGameSmileSearchInit, 10000);
+console.info('Запуск модуля поиска по смайлам GG');
 
-function GoodGameSmileSearchInit() {
-    console.info('Поиск по смайлам активирован');
+/**
+ * Запускает модуль поиска по смайлам GG.
+ *
+ * @param {Number|undefined} iterations
+ */
+function GoodGameSmileSearchInit(iterations) {
+    const mainContainer = document.getElementById("smiles");
 
-    const smileListContainer = document.getElementById("smiles");
-
-    if (!smileListContainer) {
+    if (!mainContainer) {
+        GoodGameSmileSearchReInit(iterations);
         return;
     }
 
-    const smileLisFirst = smileListContainer.querySelector(".smile-list");
-    const smileBlocks = smileListContainer.querySelectorAll('.smile-block');
+    console.info('Модуля поиска по смайлам GG запущен');
+
+    GoodGameSmileSearchProccesing(mainContainer);
+}
+
+/**
+ * Перезапускает инициализацию модуля в попытках найти нужные элементы.
+ *
+ * Перезапуск сработает не более 30 раз с ожиданием в 1 секунду.
+ *
+ * Это необходимо, так как вёрстка чата генерируется не сервером (не доступна сразу),
+ * а с помощью Angular и доступна для изменения не сразу.
+ *
+ * @param {Number|undefined} iterations
+ */
+function GoodGameSmileSearchReInit(iterations) {
+    iterations = iterations === undefined ? 0 : iterations;
+
+    ++iterations;
+
+    if (iterations === 30) {
+        console.info('Поиск по смайлам не нашёл чат');
+        return;
+    }
+
+    setTimeout(function () {
+        GoodGameSmileSearchInit(iterations);
+    }, 1000);
+}
+
+/**
+ * Запуск основного функционала модуля.
+ *
+ * @param {Element} mainContainer
+ */
+function GoodGameSmileSearchProccesing(mainContainer) {
+    const smileBtn = document.querySelector('[ng-click="vm.toggleSmiles()"]');
+    const inputChat = document.querySelector('.textarea[chat-input]');
+    const smileListFirst = mainContainer.querySelector(".smile-list");
 
     // Создаём поле для ввода поисковой фразы
     const boxSearch = document.createElement("input");
@@ -19,27 +60,27 @@ function GoodGameSmileSearchInit() {
     boxSearch.classList.add("search-smile");
 
     // Добавляет поле в вёрстку чата
-    smileLisFirst.prepend(boxSearch);
+    smileListFirst.prepend(boxSearch);
 
     // При вводе поисковой фразы фильтруем смайлы
     boxSearch.addEventListener('input', function () {
         const cssListActive = "search-smile-list-active";
+        const smileBlocks = GoodGameSmileSearchGetSmileBlocks(mainContainer);
 
         if (this.value) {
-            smileListContainer.classList.add(cssListActive);
+            mainContainer.classList.add(cssListActive);
             GoodGameSmileSearchFilterStart(smileBlocks, this.value);
         } else {
-            smileListContainer.classList.remove(cssListActive);
+            mainContainer.classList.remove(cssListActive);
             GoodGameSmileSearchShowAll(smileBlocks);
         }
     });
 
     // При отображении чата делаем фокус внутри поля поиска
-    const smileBtn = document.querySelector('[ng-click="vm.toggleSmiles()"]');
-    const inputChat = document.querySelector('.textarea[chat-input]');
-
     inputChat && inputChat.addEventListener('keydown', function (e) {
-        e.key === 'Tab' && GoodGameSmileSearchFocusInput(boxSearch);
+        if (e.key === 'Tab') {
+            GoodGameSmileSearchFocusInput(boxSearch);
+        }
     });
 
     smileBtn && smileBtn.addEventListener('click', function () {
@@ -47,14 +88,36 @@ function GoodGameSmileSearchInit() {
     });
 }
 
+/**
+ * Получает все доступные пользователю смайлы.
+ *
+ * Подобное получение (постоянный поиск в DOM) блоков не очень производительное,
+ * но зато позволяет избежать ситуаций не пападания каких-то смайлов в список.
+ *
+ * @param {Element} mainContainer
+ * @return {NodeList}
+ */
+function GoodGameSmileSearchGetSmileBlocks(mainContainer) {
+    return mainContainer.querySelectorAll('.smile-block');
+}
+
+/**
+ * Фокусирует указатель для набора тексте в поле поиска.
+ * Задержка используется, так как открытие попапа со смайлами и нашим полем не мгновенное,
+ * а поле может иметь фокус только, если оно отображено.
+ *
+ * @param {Element} boxSearch
+ */
 function GoodGameSmileSearchFocusInput(boxSearch) {
     setTimeout(function () {
         boxSearch.focus();
         boxSearch.select();
-    }, 300);
+    }, 100);
 }
 
 /**
+ * Отображает все смайлы.
+ *
  * @param {NodeList} elements
  */
 function GoodGameSmileSearchShowAll(elements) {
@@ -64,6 +127,8 @@ function GoodGameSmileSearchShowAll(elements) {
 }
 
 /**
+ * Скрывает все смайлы.
+ *
  * @param {NodeList} elements
  */
 function GoodGameSmileSearchHideAll(elements) {
@@ -73,6 +138,7 @@ function GoodGameSmileSearchHideAll(elements) {
 }
 
 /**
+ * Проверяет, соответствует ли смайл поисковой фразе или нет.
  *
  * @param {string} key
  * @param {string} word
@@ -120,6 +186,7 @@ function GoodGameSmileSearchIsShow(key, word) {
 }
 
 /**
+ * Запускает процесс фильтрации смайлов.
  *
  * @param {NodeList} elements
  * @param {string} word
@@ -137,3 +204,5 @@ function GoodGameSmileSearchFilterStart(elements, word) {
         }
     });
 }
+
+GoodGameSmileSearchInit();
