@@ -84,12 +84,12 @@ function GoodGameSmileSearchProccesing(mainContainer) {
                 inputChat.focus();
                 inputChat.click();
 
-                const range = document.createRange();
+                /*const range = document.createRange();
                 range.selectNodeContents(inputChat);
                 range.collapse(false);
                 const sel = window.getSelection();
                 sel.removeAllRanges();
-                sel.addRange(range);
+                sel.addRange(range);*/
             }, 100);
         }
     });

@@ -1,20 +1,33 @@
 {
-    "name": "Поиск по смайлам GG",
-    "description": "Добавляет поиск по смайлам в чат GoodGame.",
-    "icons": {
-      "96": "resources/icons/icon_96.png",
-      "32": "resources/icons/icon_32.png",
-      "16": "resources/icons/icon_16.png"
-    },
-    "version": "1.4",
-    "manifest_version": 3,
-    "action": {},
-    "permissions": ["scripting", "activeTab"],
-	"content_scripts": [ {
-		"all_frames": true,
-		"css": [ "inject.css" ],
-		"js": [ "inject.js" ],
-		"matches": [ "https://goodgame.ru/*", "http://localhost/*" ],
-		"run_at": "document_end"
-	} ]
+  "name": "Поиск по смайлам GG",
+  "description": "Добавляет поиск по смайлам в чат GoodGame.",
+  "icons": {
+    "96": "resources/images/icons/icon_96.png",
+    "32": "resources/images/icons/icon_32.png",
+    "16": "resources/images/icons/icon_16.png"
+  },
+  "version": "1.4.1",
+  "manifest_version": 3,
+  "action": {},
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "css": [
+        "resources/css/main.css"
+      ],
+      "js": [
+        "resources/js/main.js",
+        "resources/js/range_selection_save_restore.js"
+      ],
+      "matches": [
+        "https://goodgame.ru/*",
+        "http://localhost/*"
+      ],
+      "run_at": "document_end"
+    }
+  ]
 }
