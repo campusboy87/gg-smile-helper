@@ -2,7 +2,7 @@
 
 ![chat-smile-search](https://user-images.githubusercontent.com/20075333/225253624-9e3b9a62-44be-4745-bfc4-f7eeb4a989b4.gif)
 
-Расширение подойдёт для браузеров на основе Chromium (Google Chrome, Яндекс.Браузер, Microsoft Edge и другие). [Скачайте](https://github.com/campusboy87/gg-smile-helper/archive/refs/heads/master.zip) его и [установите](https://youtu.be/toEYQprOZcQ?t=191) в браузер.
+Расширение подойдёт для браузеров на основе Chromium (Google Chrome, Яндекс.Браузер, Microsoft Edge и другие). [Скачайте](https://github.com/campusboy87/gg-smile-helper/archive/refs/heads/master.zip) его и [установите](https://youtu.be/toEYQprOZcQ?t=191) в браузер. Работает как в обычном чате, так и в отдельном.
 
 Расширение писалось "на коленке", чтобы протестировать идею и закрыть свою личную потребность, да и ещё впервые :) Если Вы заметили баги или есть предложения, то пишите их [сюда](https://github.com/campusboy87/gg-smile-helper/issues). Ну или дорабатывайте и шлите Pull requests, это будет круто! На данный момент, что хотелось бы ещё:
 - [ ] Реализовать страницу настроек расширения на будущее.

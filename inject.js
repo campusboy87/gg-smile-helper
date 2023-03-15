@@ -1,6 +1,8 @@
 setTimeout(GoodGameSmileSearchInit, 10000);
 
 function GoodGameSmileSearchInit() {
+    console.info('Поиск по смайлам активирован');
+
     const smileListContainer = document.getElementById("smiles");
 
     if (!smileListContainer) {
@@ -10,13 +12,16 @@ function GoodGameSmileSearchInit() {
     const smileLisFirst = smileListContainer.querySelector(".smile-list");
     const smileBlocks = smileListContainer.querySelectorAll('.smile-block');
 
+    // Создаём поле для ввода поисковой фразы
     const boxSearch = document.createElement("input");
     boxSearch.type = "text";
     boxSearch.placeholder = "Поиск смайла";
     boxSearch.classList.add("search-smile");
 
+    // Добавляет поле в вёрстку чата
     smileLisFirst.prepend(boxSearch);
 
+    // При вводе поисковой фразы фильтруем смайлы
     boxSearch.addEventListener('input', function () {
         const cssListActive = "search-smile-list-active";
 
@@ -28,6 +33,25 @@ function GoodGameSmileSearchInit() {
             GoodGameSmileSearchShowAll(smileBlocks);
         }
     });
+
+    // При отображении чата делаем фокус внутри поля поиска
+    const smileBtn = document.querySelector('[ng-click="vm.toggleSmiles()"]');
+    const inputChat = document.querySelector('.textarea[chat-input]');
+
+    inputChat && inputChat.addEventListener('keydown', function (e) {
+        e.key === 'Tab' && GoodGameSmileSearchFocusInput(boxSearch);
+    });
+
+    smileBtn && smileBtn.addEventListener('click', function () {
+        GoodGameSmileSearchFocusInput(boxSearch);
+    });
+}
+
+function GoodGameSmileSearchFocusInput(boxSearch) {
+    setTimeout(function () {
+        boxSearch.focus();
+        boxSearch.select();
+    }, 300);
 }
 
 /**
