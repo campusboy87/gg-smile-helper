@@ -2,6 +2,7 @@
     margin-bottom: 15px;
 }
 
+.search-smile-list-active .favorite-smiles,
 .search-smile-list-active .streamer-name {
     display: none !important;
 }
