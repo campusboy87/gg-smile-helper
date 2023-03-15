@@ -76,14 +76,31 @@ function GoodGameSmileSearchProccesing(mainContainer) {
         }
     });
 
+    // При нажатии Tab и Escape скрываем селектор смайлов и возвращаем фокус в поле ввода сообщения
+    boxSearch.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab' || e.key === 'Escape') {
+            smileBtn.click();
+            setTimeout(function () {
+                inputChat.focus();
+                inputChat.click();
+
+                const range = document.createRange();
+                range.selectNodeContents(inputChat);
+                range.collapse(false);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }, 100);
+        }
+    });
+
     // При отображении чата делаем фокус внутри поля поиска
-    inputChat && inputChat.addEventListener('keydown', function (e) {
+    inputChat.addEventListener('keydown', function (e) {
         if (e.key === 'Tab') {
             GoodGameSmileSearchFocusInput(boxSearch);
         }
     });
-
-    smileBtn && smileBtn.addEventListener('click', function () {
+    smileBtn.addEventListener('click', function () {
         GoodGameSmileSearchFocusInput(boxSearch);
     });
 }
