@@ -10,3 +10,7 @@
     display: inline !important;
     padding-right: 0 !important;
 }
+
+.search-smile-list-active .smiles-list-block {
+    padding-right: 0 !important;
+}

@@ -1,12 +1,13 @@
 setTimeout(GoodGameSmileSearchInit, 10000);
 
 function GoodGameSmileSearchInit() {
-    const smileListContainer = document.querySelector(".smile-list");
+    const smileListContainer = document.getElementById("smiles");
 
     if (!smileListContainer) {
         return;
     }
 
+    const smileLisFirst = smileListContainer.querySelector(".smile-list");
     const smileBlocks = smileListContainer.querySelectorAll('.smile-block');
 
     const boxSearch = document.createElement("input");
@@ -14,7 +15,7 @@ function GoodGameSmileSearchInit() {
     boxSearch.placeholder = "Поиск смайла";
     boxSearch.classList.add("search-smile");
 
-    smileListContainer.prepend(boxSearch);
+    smileLisFirst.prepend(boxSearch);
 
     boxSearch.addEventListener('input', function () {
         const cssListActive = "search-smile-list-active";
